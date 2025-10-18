@@ -1,0 +1,12 @@
+{
+    email store@serenavibe.com.br
+}
+
+store.serenavibe.com.br {
+    encode gzip
+    reverse_proxy wordpress:80
+}
+
+www.store.serenavibe.com.br {
+    redir https://store.serenavibe.com.br{uri}
+}

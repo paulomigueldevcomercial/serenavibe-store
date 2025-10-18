@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: serenavibe-wordpress
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: wordpress-db.cp8cqkwqmsaz.us-east-2.rds.amazonaws.com:3306
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_PASSWORD: ShadowDev123
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./data/wordpress:/var/www/html
+    networks:
+      - serenavibe_net
+
+  caddy:
+    image: caddy:latest
+    container_name: serenavibe-caddy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./data/wordpress:/var/www/html
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - wordpress
+    networks:
+      - serenavibe_net
+
+networks:
+  serenavibe_net:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:
