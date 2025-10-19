@@ -6,9 +6,9 @@ services:
     container_name: serenavibe-wordpress
     restart: always
     environment:
-      WORDPRESS_DB_HOST: wordpress-db.cp8cqkwqmsaz.us-east-2.rds.amazonaws.com:3306
+      WORDPRESS_DB_HOST: wordpress-2.cp8cqkwqmsaz.us-east-2.rds.amazonaws.com:3306
       WORDPRESS_DB_USER: admin
-      WORDPRESS_DB_PASSWORD: ShadowDev123!@#
+      WORDPRESS_DB_PASSWORD: ShadowDev123
       WORDPRESS_DB_NAME: wordpress
     volumes:
       - ./data/wordpress:/var/www/html
