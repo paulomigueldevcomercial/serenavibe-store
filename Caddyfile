@@ -1,3 +1,6 @@
+# Configuracao legada para deploy standalone com Caddy.
+# Neste servidor, o host store.serenavibe.com.br fica no nginx principal
+# de goldeplaca-projeto e aponta para serenavibe-wordpress:80.
 {
     email store@serenavibe.com.br
 }

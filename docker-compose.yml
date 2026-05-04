@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   wordpress:
     image: wordpress:latest
@@ -12,30 +10,14 @@ services:
       WORDPRESS_DB_NAME: wordpress
     volumes:
       - ./data/wordpress:/var/www/html
+    expose:
+      - "80"
     networks:
-      - serenavibe_net
-
-  caddy:
-    image: caddy:latest
-    container_name: serenavibe-caddy
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./data/wordpress:/var/www/html
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on:
-      - wordpress
-    networks:
-      - serenavibe_net
+      serenavibe_proxy:
+        aliases:
+          - serenavibe-wordpress
 
 networks:
-  serenavibe_net:
-    driver: bridge
-
-volumes:
-  caddy_data:
-  caddy_config:
+  serenavibe_proxy:
+    external: true
+    name: ${SERENAVIBE_PROXY_NETWORK:-goldeplaca_proxy}

@@ -23,3 +23,27 @@ GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';
 FLUSH PRIVILEGES;
 
 mysql -h wordpress-2.cp8cqkwqmsaz.us-east-2.rds.amazonaws.com:3306 -u admin -p
+
+## Deploy neste servidor
+
+O proxy HTTP deste projeto fica no nginx principal de `goldeplaca-projeto`.
+O container `serenavibe-wordpress` sobe separado e entra na rede Docker
+`goldeplaca_proxy`, criada pelo compose principal.
+
+Subir o nginx principal no diretorio raiz de `goldeplaca-projeto`:
+
+```bash
+docker compose up -d nginx
+```
+
+Subir somente a loja Serenavibe:
+
+```bash
+cd serenavibe-store
+./start-serenavibe-store.sh
+```
+
+DNS esperado:
+
+- `store.serenavibe.com.br` aponta para este servidor e o nginx encaminha para `serenavibe-wordpress:80`.
+- `www.store.serenavibe.com.br` redireciona para `store.serenavibe.com.br`.
